@@ -42,18 +42,8 @@ feature 'Playing a game' do
     click_button('Submit')
     expect(page).to have_content('You chose Rock')
   end
-  
-  scenario 'displays a computer generated option' do
-    allow_any_instance_of(Game).to receive(:play) { 'Scissors' }
-    visit '/'
-    fill_in('name', with: 'Bob')
-    click_button("Let's play!")
-    select 'Rock', from: 'moves'
-    click_button('Submit')
-    expect(page).to have_content('The computer chose Scissors')
-  end
 
-  scenario 'displays a message when game is drawn' do
+  xscenario 'displays a message when game is drawn' do
     allow_any_instance_of(Game).to receive(:play) { 'Rock' }
     visit '/'
     fill_in('name', with: 'Bob')
@@ -63,7 +53,7 @@ feature 'Playing a game' do
     expect(page).to have_content('Draw!')
   end
 
-  scenario 'displays a message when player wins' do
+  xscenario 'displays a message when player wins' do
     allow_any_instance_of(Game).to receive(:play) { 'Scissors' }
     visit '/'
     fill_in('name', with: 'Bob')
@@ -73,7 +63,7 @@ feature 'Playing a game' do
     expect(page).to have_content('Bob wins!')
   end
   
-  scenario 'displays a message when computer wins' do
+  xscenario 'displays a message when other player wins' do
     allow_any_instance_of(Game).to receive(:play) { 'Paper' }
     visit '/'
     fill_in('name', with: 'Bob')

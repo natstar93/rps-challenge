@@ -2,7 +2,9 @@ require 'sinatra/base'
 require_relative 'game'
 
 class RPSchallenge < Sinatra::Base
-  
+
+  enable :sessions
+
   set :views, proc { File.join(root, '..', 'views') }
 
   get '/' do
@@ -13,15 +15,20 @@ class RPSchallenge < Sinatra::Base
     @name = params[:name]
     session[:name] = @name
     redirect '/' if @name == ""
-    game = Game.new
-    @player_option = params[:moves]
-    @computer_option = game.play
-    if @player_option == @computer_option
-      @outcome = 'Draw!'
+    if $game
+      session[:player] = 'player_2'
     else
-      @outcome = game.winner @player_option, @computer_option, @name
+      session[:player] = 'player_1'
     end
+    p session[:player]
+    $game = Game.new
     erb :new_game
+  end
+
+  post '/result' do
+    @player_option = params[:moves]
+    p session[:player]
+    erb :result
   end
   
   # start the server if ruby file executed directly
