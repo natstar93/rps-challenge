@@ -27,7 +27,14 @@ class RPSchallenge < Sinatra::Base
 
   post '/result' do
     @player_option = params[:moves]
-    p session[:player]
+    $playing = true if (session[:player] == 'player_2')
+    if $playing
+      @outcome = 'Draw!'
+    else
+      sleep 1
+      post '/result' 
+    end
+    p $playing
     erb :result
   end
   

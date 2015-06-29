@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative 'helpers.rb'
 
 feature 'Starting a new game' do
 
@@ -43,14 +44,23 @@ feature 'Playing a game' do
     expect(page).to have_content('You chose Rock')
   end
 
-  xscenario 'displays a message when game is drawn' do
-    allow_any_instance_of(Game).to receive(:play) { 'Rock' }
-    visit '/'
-    fill_in('name', with: 'Bob')
-    click_button("Let's play!")
-    select 'Rock', from: 'moves'
-    click_button('Submit')
-    expect(page).to have_content('Draw!')
+  scenario 'displays a message when game is drawn' do
+    in_browser(:one) do
+      visit '/'
+      fill_in('name', with: 'Bob')
+      click_button("Let's play!")
+      select 'Rock', from: 'moves'
+      click_button('Submit')
+    end
+
+    in_browser(:one) do
+      visit '/'
+      fill_in('name', with: 'Bill')
+      click_button("Let's play!")
+      select 'Rock', from: 'moves'
+      click_button('Submit')
+      expect(page).to have_content('Draw!')
+    end
   end
 
   xscenario 'displays a message when player wins' do

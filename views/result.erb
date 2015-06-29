@@ -1,10 +1,13 @@
-  <p>
-    You chose <%= @player_option %>
-  </p>
+<input type="hidden" name="name" value=<%= @name %>> 
+<input type="hidden" name="moves" value=<%= @moves %>> 
+<p>
+  You chose <%= @player_option %>
+</p>
   <!-- <p>
     The computer chose <%= @computer_option%>
   </p> -->
-<!--   <p>
+<% if @outcome %>
+  <p>
     <%= @outcome %>
-  </p> -->
-
+  </p>
+<% end %>
