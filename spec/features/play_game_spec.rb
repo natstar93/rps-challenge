@@ -2,8 +2,11 @@ require 'spec_helper'
 
 feature 'Starting a new game' do
 
-  scenario 'asks user for their name' do
+  before do # use before block to DRY out tests
     visit '/'
+  end
+
+  scenario 'asks user for their name' do
     expect(page).to have_content('What is your name?')
   end
 
@@ -23,15 +26,11 @@ end
 
 feature 'Playing a game' do
 
-  before(:each) do
-    game = nil
-  end
-
   scenario 'allows user to pick an option' do
     visit '/'
     fill_in('name', with: 'Bob')
     click_button("Let's play!")
-    expect(page).to have_selector ('select')
+    expect(page).to have_selector ('select') # probably don't need a test for this as you're implicitly testing it further down
   end
 
   scenario 'displays the chosen option' do

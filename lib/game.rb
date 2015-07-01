@@ -1,7 +1,8 @@
 class Game
+  attr_reader :possible_choices
 
   def initialize
-    
+    @possible_choices = ['Rock', 'Paper', 'Scissors'] # consider injecting in the elements of the game, rather than having them hardcoded
   end
   
   def play
@@ -9,11 +10,15 @@ class Game
   end
 
   def winner player, computer, name
+    [player, computer].each do |choice|
+      fail 'Bad choice' unless possible_choices.include? choice
+    end
+
     case player
     when 'Scissors'
-      @output = (computer == 'Rock' ? 'Computer wins' : (name + ' wins!'))
+      computer == 'Rock' ? 'Computer wins' : (name + ' wins!')
     when 'Rock'
-      @output = (computer == 'Paper' ? 'Computer wins' : (name + ' wins!'))
+      @output = (computer == 'Paper' ? 'Computer wins' : (name + ' wins!')) # you needn't use this instance variable.
     else
       @output = (computer == 'Scissors' ? 'Computer wins' : (name + ' wins!'))
     end
